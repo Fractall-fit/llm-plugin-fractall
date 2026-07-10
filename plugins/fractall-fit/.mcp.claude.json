@@ -1,0 +1,11 @@
+{
+  "mcpServers": {
+    "fractall-fit": {
+      "type": "http",
+      "url": "https://mcp.fractall.fit/mcp",
+      "oauth": {
+        "scopes": "openid email profile"
+      }
+    }
+  }
+}

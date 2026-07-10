@@ -7,11 +7,11 @@ description: Query Fractall teams and athlete rosters. Use when the user asks ab
 
 ## Overview
 
-This skill connects Codex to the hosted Fractall MCP server. Use it to verify the connection, list teams visible to the signed-in user, fetch a team by ID, and load athlete rosters for a team.
+This skill connects the AI app to the hosted Fractall MCP server. Use it to verify the connection, list teams visible to the signed-in user, fetch a team by ID, and load athlete rosters for a team.
 
 ## Prerequisites
 
-- The Fractall.fit plugin must be installed and authenticated in Codex.
+- The Fractall.fit plugin must be installed and authenticated in the current AI app.
 - The user must have an active Fractall account linked to their OAuth identity.
 - Team and roster tools are intended for admin, super_admin, or coach roles.
 
@@ -30,8 +30,8 @@ This skill connects Codex to the hosted Fractall MCP server. Use it to verify th
 
 If Fractall tools are missing, stop and ask the user to:
 
-1. Install the Fractall.fit plugin in Codex.
-2. Complete the browser login when Codex prompts for OAuth.
+1. Install the Fractall.fit plugin.
+2. Complete the browser login when the app prompts for OAuth.
 3. Retry the request in a new message after authentication succeeds.
 
 ### Step 1: Confirm the goal

@@ -1,0 +1,24 @@
+{
+  "name": "fractall-fit",
+  "displayName": "Fractall.fit",
+  "version": "0.1.0",
+  "description": "Query Fractall teams and athlete rosters from Claude Code.",
+  "author": {
+    "name": "Fractall.fit",
+    "url": "https://fractall.fit"
+  },
+  "homepage": "https://fractall.fit",
+  "repository": "https://github.com/Fractall-fit/llm-plugin-fractall",
+  "license": "UNLICENSED",
+  "keywords": [
+    "fractall",
+    "fractall-fit",
+    "sports",
+    "teams",
+    "athletes",
+    "coaching",
+    "roster"
+  ],
+  "skills": "./skills/",
+  "mcpServers": "./.mcp.claude.json"
+}
