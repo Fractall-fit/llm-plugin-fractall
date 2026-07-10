@@ -1,0 +1,9 @@
+{
+  "mcpServers": {
+    "fractall-fit": {
+      "type": "http",
+      "url": "https://mcp.fractall.fit/mcp",
+      "oauth_resource": "https://mcp.fractall.fit"
+    }
+  }
+}

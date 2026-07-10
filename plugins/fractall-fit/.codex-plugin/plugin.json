@@ -1,0 +1,43 @@
+{
+  "name": "fractall-fit",
+  "version": "0.1.0",
+  "description": "Query Fractall teams and athlete rosters from Codex.",
+  "author": {
+    "name": "Fractall.fit",
+    "url": "https://fractall.fit"
+  },
+  "homepage": "https://fractall.fit",
+  "repository": "https://github.com/Fractall-fit/codex-plugin-fractall",
+  "license": "UNLICENSED",
+  "keywords": [
+    "fractall",
+    "fractall-fit",
+    "sports",
+    "teams",
+    "athletes",
+    "coaching",
+    "roster"
+  ],
+  "skills": "./skills/",
+  "mcpServers": "./.mcp.json",
+  "interface": {
+    "displayName": "Fractall.fit",
+    "shortDescription": "Query teams and athlete rosters.",
+    "longDescription": "Connect Codex to your Fractall club. List teams, inspect team details, and pull athlete rosters using your existing Fractall account.",
+    "developerName": "Fractall.fit",
+    "category": "Productivity",
+    "capabilities": ["Interactive", "Read"],
+    "websiteURL": "https://fractall.fit",
+    "privacyPolicyURL": "https://app.fractall.fit/privacy",
+    "termsOfServiceURL": "https://fractall.fit",
+    "brandColor": "#000000",
+    "defaultPrompt": [
+      "List the teams I can access in Fractall",
+      "Show athletes on my main team",
+      "Summarize my club teams and roster sizes"
+    ],
+    "composerIcon": "./assets/fractall-icon.svg",
+    "logo": "./assets/fractall-icon.svg",
+    "screenshots": []
+  }
+}

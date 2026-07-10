@@ -1,0 +1,20 @@
+{
+  "name": "fractall-fit",
+  "interface": {
+    "displayName": "Fractall.fit"
+  },
+  "plugins": [
+    {
+      "name": "fractall-fit",
+      "source": {
+        "source": "local",
+        "path": "./plugins/fractall-fit"
+      },
+      "policy": {
+        "installation": "AVAILABLE",
+        "authentication": "ON_INSTALL"
+      },
+      "category": "Productivity"
+    }
+  ]
+}
