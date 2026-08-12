@@ -1,8 +1,8 @@
 {
   "name": "fractall-fit",
   "displayName": "Fractall.fit",
-  "version": "0.1.0",
-  "description": "Query Fractall teams and athlete rosters from Claude Code.",
+  "version": "0.2.0",
+  "description": "Query Fractall teams, wellness, training load, and injuries from Claude Code.",
   "author": {
     "name": "Fractall.fit",
     "url": "https://fractall.fit"
@@ -17,7 +17,12 @@
     "teams",
     "athletes",
     "coaching",
-    "roster"
+    "roster",
+    "wellness",
+    "rpe",
+    "training-load",
+    "injuries",
+    "mcp"
   ],
   "skills": "./skills/",
   "mcpServers": "./.mcp.claude.json"

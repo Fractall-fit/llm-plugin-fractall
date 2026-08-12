@@ -1,68 +1,98 @@
 ---
 name: fractall-fit
-description: Query Fractall teams and athlete rosters. Use when the user asks about their club, teams, squads, or athletes in Fractall.
+description: >-
+  Query Fractall coach data — teams, athletes, wellness, training load/RPE, and
+  injuries — via the hosted Fractall MCP server. Use when the user asks about
+  their club, squads, check-ins, load/ACWR, who is injured, or pre-injury context.
 ---
 
 # Fractall.fit
 
 ## Overview
 
-This skill connects the AI app to the hosted Fractall MCP server. Use it to verify the connection, list teams visible to the signed-in user, fetch a team by ID, and load athlete rosters for a team.
+This skill connects the AI app to the hosted Fractall MCP server at
+`https://mcp.fractall.fit/mcp`. Tools return **Coach Data Lens** envelopes
+(summary-first JSON with names and KPIs). Reply in plain language — never dump
+raw JSON or UUIDs to the user. Use IDs only for follow-up tool calls.
 
 ## Prerequisites
 
-- The Fractall.fit plugin must be installed and authenticated in the current AI app.
-- The user must have an active Fractall account linked to their OAuth identity.
-- Team and roster tools are intended for admin, super_admin, or coach roles.
+- Fractall.fit plugin installed and authenticated (OAuth) in the current AI app.
+- Active Fractall account linked to the OAuth identity.
+- Tools are intended for `admin`, `super_admin`, or `coach` roles.
 
-## Available tools
+If tools are missing or MCP status shows an error: ask the user to open MCP
+settings, run `mcp_auth` / re-authenticate Fractall.fit, then retry in a new message.
 
-- `get_connection_status` — verify MCP connectivity and show the resolved Fractall auth context.
-- `get_teams` — list teams visible to the signed-in user.
-- `get_team_by_id` — fetch one team when you already have a team UUID.
-- `get_team_athletes` — fetch athletes and profile fields for a team UUID.
+## Tool surface
+
+### Orient
+
+- `get_connection_status` — MCP + auth context
+- `get_teams` — teams visible to the signed-in user
+- `get_team_by_id` — one team by UUID
+- `get_team_athletes` — roster summary (optional full profiles)
+- `get_athlete_profile` — one athlete profile
+- `get_recent_sessions` — recent team sessions (default last 7 days)
+
+### Wellness
+
+- `get_team_wellness` — squad wellness summary for a date range
+- `get_wellness_non_responders` — who has not checked in (defaults to today UTC)
+- `get_athlete_wellness` — one athlete summary + recent check-ins
+
+### Training load / RPE
+
+- `get_team_load` — per-athlete load table; set `includeMetrics=true` for ACWR / EWMA ACWR / monotony / strain
+- `get_team_rpe` — team RPE by session; optional drill-down
+- `get_athlete_load` — one athlete load + metrics at end date
+- `get_rpe_non_responders` — who missed RPE for a session
+
+### Injuries
+
+- `get_team_injuries` — open cases by default; overview + notable + capped list
+- `get_injury` — one case + progress + athlete history
+- `get_pre_injury_context` — 7 days before injury (wellness/load) + ACWR/EWMA at injury date
 
 ## Required workflow
 
-**Follow these steps in order when answering Fractall questions.**
+### Step 0: Auth
 
-### Step 0: Connect Fractall (if tools are unavailable)
+If Fractall tools are unavailable or discovery failed, stop and ask the user to
+authenticate the Fractall.fit MCP server, then retry.
 
-If Fractall tools are missing, stop and ask the user to:
+### Step 1: Orient
 
-1. Install the Fractall.fit plugin.
-2. Complete the browser login when the app prompts for OAuth.
-3. Retry the request in a new message after authentication succeeds.
+1. Prefer `get_connection_status` when auth/connectivity is uncertain.
+2. Call `get_teams` to discover accessible teams (match by name when the user
+   does not provide a UUID).
+3. Use `get_team_by_id` / `get_team_athletes` only after you have the right `teamId`.
 
-### Step 1: Confirm the goal
+### Step 2: Pick the right domain tool
 
-Clarify whether the user wants:
+| Coach question | Tool |
+| --- | --- |
+| How is squad wellness? | `get_team_wellness` |
+| Who hasn't checked in? | `get_wellness_non_responders` |
+| Squad load / ACWR / strain | `get_team_load` with `includeMetrics=true` |
+| Who missed RPE? | `get_rpe_non_responders` |
+| Who is out / RTP / cleared? | `get_team_injuries` |
+| One injury case / progress | `get_injury` |
+| How did they look before injury? | `get_pre_injury_context` |
 
-- a connection check,
-- a team list,
-- one team’s details,
-- or a roster for a specific team.
+Do **not** answer squad load questions with repeated `get_athlete_load` calls.
+Do **not** call `get_injury` before `get_team_injuries` for squad injury questions.
 
-If they name a team by label instead of ID, call `get_teams` first and match by name.
+### Step 3: Present results
 
-### Step 2: Read before summarizing
-
-Use tools in this order:
-
-1. `get_connection_status` when auth or connectivity is uncertain.
-2. `get_teams` to discover accessible teams.
-3. `get_team_by_id` only when a UUID is known or selected from `get_teams`.
-4. `get_team_athletes` after you have the correct `teamId`.
-
-### Step 3: Present results clearly
-
-- Summarize teams with names and IDs when follow-up actions may be needed.
-- For rosters, group athletes logically and call out missing or sparse profile fields.
-- If a tool returns an error, explain it in plain language and suggest the next step.
+- Lead with highlights and notable athletes, then supporting numbers.
+- Use athlete/team **names** and dates — never UUIDs in user-visible text.
+- If a tool errors, explain plainly and suggest the next step.
 
 ## Example prompts
 
 - "List my Fractall teams"
-- "Who is on the U18 squad?"
-- "Show roster details for team `<uuid>`"
-- "Check whether Fractall MCP is connected"
+- "Who hasn't submitted wellness today?"
+- "Show squad load and who is above ACWR 1.3"
+- "Who is currently injured or in RTP?"
+- "What did wellness and load look like before that hamstring injury?"

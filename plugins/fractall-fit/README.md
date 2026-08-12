@@ -1,6 +1,7 @@
 # Fractall.fit for AI Apps
 
-Connect Codex or Claude Code to your Fractall club and ask about teams and athletes in plain language.
+Connect Codex, Claude Code, or Cursor to your Fractall club and ask about
+teams, wellness, training load, and injuries in plain language.
 
 ## Before You Start
 
@@ -17,7 +18,7 @@ codex plugin marketplace add Fractall-fit/llm-plugin-fractall
 codex plugin add fractall-fit@fractall-fit
 ```
 
-If your team uses a private GitHub repo, replace the first command with the HTTPS URL you were given.
+For private/internal distributions, replace the marketplace path with the HTTPS URL you were given.
 
 ## Install In Claude Code
 
@@ -29,7 +30,7 @@ In Claude Code, run:
 /reload-plugins
 ```
 
-If your team uses a private GitHub repo, replace the marketplace path with the HTTPS or SSH URL you were given.
+For private/internal distributions, replace the marketplace path with the HTTPS or SSH URL you were given.
 
 ## Sign In With Codex
 
@@ -54,11 +55,12 @@ If login does not start automatically:
 
 ## Try It
 
-Ask Codex or Claude Code things like:
+Ask things like:
 
 - "List my Fractall teams"
-- "Show athletes on my first team"
-- "Summarize my club teams and roster sizes"
+- "Who hasn't checked in wellness today?"
+- "Show squad load with ACWR highlights"
+- "Who is currently injured or in RTP?"
 
 ## Update Later
 

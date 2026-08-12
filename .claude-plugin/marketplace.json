@@ -8,8 +8,8 @@
     {
       "name": "fractall-fit",
       "source": "./plugins/fractall-fit",
-      "description": "Query Fractall teams and athlete rosters from Claude Code.",
-      "version": "0.1.0",
+      "description": "Query Fractall teams, wellness, training load, and injuries from Claude Code.",
+      "version": "0.2.0",
       "author": {
         "name": "Fractall.fit"
       },
@@ -21,6 +21,9 @@
         "athletes",
         "coaching",
         "roster",
+        "wellness",
+        "rpe",
+        "injuries",
         "mcp"
       ]
     }

@@ -53,13 +53,14 @@ Inside Claude Code, run:
 
 For OAuth, run `/mcp` inside Claude Code and authenticate the `fractall-fit` server if prompted.
 
-## Share With Users
+## Release Checklist
 
-1. Push this repo to GitHub as `Fractall-fit/llm-plugin-fractall`.
-2. Send founders the install steps in `plugins/fractall-fit/README.md`.
-3. Bump both plugin manifest versions when MCP URLs or copy change:
+1. Publish updates to `Fractall-fit/llm-plugin-fractall`.
+2. Send users the install steps in `plugins/fractall-fit/README.md`.
+3. Bump plugin manifest versions when MCP URLs, skill, or copy change:
    - `plugins/fractall-fit/.codex-plugin/plugin.json`
    - `plugins/fractall-fit/.claude-plugin/plugin.json`
+   - `.claude-plugin/marketplace.json` (plugin version field)
 4. Tell Codex users to run `codex plugin update fractall-fit@fractall-fit` after updates.
 5. Tell Claude Code users to run `/plugin marketplace update fractall-fit`, then `/plugin install fractall-fit@fractall-fit` if needed.
 
@@ -95,7 +96,9 @@ The Claude Code plugin uses Claude's documented MCP config shape and relies on s
 }
 ```
 
-Production MCP must keep:
+## Maintainer MCP Notes
+
+The production MCP server must keep:
 
 - `MCP_AUTH_MODE=oauth`
 - `MCP_OAUTH_REQUIRED_SCOPES` unset
@@ -103,9 +106,20 @@ Production MCP must keep:
 
 ## Tools Exposed
 
-- `get_connection_status`
-- `get_teams`
-- `get_team_by_id`
-- `get_team_athletes`
+Tool implementations live on the hosted MCP server. This plugin only packages
+HTTP MCP + OAuth config and the coach skill. Current server surface includes:
 
-See `apps/mcp-server/README.md` for server operations and troubleshooting.
+**Orient:** `get_connection_status`, `get_teams`, `get_team_by_id`,
+`get_team_athletes`, `get_athlete_profile`, `get_recent_sessions`
+
+**Wellness:** `get_team_wellness`, `get_wellness_non_responders`,
+`get_athlete_wellness`
+
+**Load / RPE:** `get_team_load`, `get_team_rpe`, `get_athlete_load`,
+`get_rpe_non_responders`
+
+**Injuries:** `get_team_injuries`, `get_injury`, `get_pre_injury_context`
+
+If an AI app still shows only the original four tools, live MCP discovery
+failed (usually OAuth). Re-authenticate the Fractall.fit MCP server, then
+update/reload the plugin so the skill and tool list refresh.

@@ -1,7 +1,7 @@
 {
   "name": "fractall-fit",
-  "version": "0.1.0",
-  "description": "Query Fractall teams and athlete rosters from Codex.",
+  "version": "0.2.0",
+  "description": "Query Fractall teams, wellness, training load, and injuries from Codex.",
   "author": {
     "name": "Fractall.fit",
     "url": "https://fractall.fit"
@@ -16,14 +16,19 @@
     "teams",
     "athletes",
     "coaching",
-    "roster"
+    "roster",
+    "wellness",
+    "rpe",
+    "training-load",
+    "injuries",
+    "mcp"
   ],
   "skills": "./skills/",
   "mcpServers": "./.mcp.json",
   "interface": {
     "displayName": "Fractall.fit",
-    "shortDescription": "Query teams and athlete rosters.",
-    "longDescription": "Connect Codex to your Fractall club. List teams, inspect team details, and pull athlete rosters using your existing Fractall account.",
+    "shortDescription": "Coach data: teams, wellness, load, injuries.",
+    "longDescription": "Connect Codex to your Fractall club. List teams and rosters, review wellness and training load (including ACWR/EWMA), and inspect injuries using your existing Fractall account.",
     "developerName": "Fractall.fit",
     "category": "Productivity",
     "capabilities": ["Interactive", "Read"],
@@ -33,8 +38,9 @@
     "brandColor": "#000000",
     "defaultPrompt": [
       "List the teams I can access in Fractall",
-      "Show athletes on my main team",
-      "Summarize my club teams and roster sizes"
+      "Who hasn't checked in wellness today?",
+      "Show squad load with ACWR highlights",
+      "Who is currently injured or in RTP?"
     ],
     "composerIcon": "./assets/fractall-icon.svg",
     "logo": "./assets/fractall-icon.svg",
