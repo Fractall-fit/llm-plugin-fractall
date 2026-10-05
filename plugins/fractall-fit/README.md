@@ -1,7 +1,8 @@
 # Fractall.fit for AI Apps
 
 Connect Codex, Claude Code, or Cursor to your Fractall club and ask about
-teams, wellness, training load, and injuries in plain language.
+teams, the calendar, wellness, RPE and GPS load, injuries, physical tests, and
+chart-style reports in plain language.
 
 ## Before You Start
 
@@ -18,8 +19,6 @@ codex plugin marketplace add Fractall-fit/llm-plugin-fractall
 codex plugin add fractall-fit@fractall-fit
 ```
 
-For private/internal distributions, replace the marketplace path with the HTTPS URL you were given.
-
 ## Install In Claude Code
 
 In Claude Code, run:
@@ -29,8 +28,6 @@ In Claude Code, run:
 /plugin install fractall-fit@fractall-fit
 /reload-plugins
 ```
-
-For private/internal distributions, replace the marketplace path with the HTTPS or SSH URL you were given.
 
 ## Sign In With Codex
 
@@ -59,7 +56,9 @@ Ask things like:
 
 - "List my Fractall teams"
 - "Who hasn't checked in wellness today?"
-- "Show squad load with ACWR highlights"
+- "Show squad RPE load with ACWR highlights"
+- "Show GPS ACWR for distance and high-speed running"
+- "Build a squad load chart I can read in this chat"
 - "Who is currently injured or in RTP?"
 
 ## Update Later
