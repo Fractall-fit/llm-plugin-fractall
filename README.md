@@ -1,125 +1,74 @@
 # Fractall.fit AI App Plugins
 
-Plugin packages for connecting AI apps to the hosted Fractall MCP server at `https://mcp.fractall.fit/mcp`.
+Connect Codex or Claude Code to the hosted Fractall MCP server at
+`https://mcp.fractall.fit/mcp`.
 
-Currently this repo packages the same Fractall integration for:
+This repo packages the same integration for both apps. Tool implementations live
+on the hosted server. The plugin ships HTTP MCP plus OAuth config and the coach
+skill.
 
-- Codex, via `.codex-plugin/plugin.json` and `.agents/plugins/marketplace.json`
-- Claude Code, via `.claude-plugin/plugin.json` and `.claude-plugin/marketplace.json`
+Install, sign-in, and update steps are in
+[`plugins/fractall-fit/README.md`](plugins/fractall-fit/README.md).
 
-## Layout
-
-```text
-llm-plugin-fractall/
-├── .agents/plugins/marketplace.json
-├── .claude-plugin/marketplace.json
-└── plugins/fractall-fit/
-    ├── .claude-plugin/plugin.json
-    ├── .codex-plugin/plugin.json
-    ├── .mcp.json
-    ├── .mcp.claude.json
-    ├── assets/
-    ├── skills/fractall-fit/SKILL.md
-    └── README.md
-```
-
-## Codex Local Test
-
-From a machine with Codex installed:
+## Codex
 
 ```sh
-codex plugin marketplace add /absolute/path/to/llm-plugin-fractall
+codex plugin marketplace add Fractall-fit/llm-plugin-fractall
 codex plugin add fractall-fit@fractall-fit
 ```
 
-Codex should prompt for OAuth against Fractall on install. Then ask:
-
-- "Check Fractall connection status"
-- "List my teams"
-
-## Claude Code Local Test
-
-From this repo root:
+Codex prompts for Fractall OAuth on install. After updates:
 
 ```sh
-claude --plugin-dir ./plugins/fractall-fit
+codex plugin update fractall-fit@fractall-fit
 ```
 
-Inside Claude Code, run:
+## Claude Code
 
 ```text
-/fractall-fit:fractall-fit
+/plugin marketplace add Fractall-fit/llm-plugin-fractall
+/plugin install fractall-fit@fractall-fit
+/reload-plugins
 ```
 
-For OAuth, run `/mcp` inside Claude Code and authenticate the `fractall-fit` server if prompted.
+Authenticate the `fractall-fit` MCP server from `/mcp` if prompted. After
+updates:
 
-## Release Checklist
-
-1. Publish updates to `Fractall-fit/llm-plugin-fractall`.
-2. Send users the install steps in `plugins/fractall-fit/README.md`.
-3. Bump plugin manifest versions when MCP URLs, skill, or copy change:
-   - `plugins/fractall-fit/.codex-plugin/plugin.json`
-   - `plugins/fractall-fit/.claude-plugin/plugin.json`
-   - `.claude-plugin/marketplace.json` (plugin version field)
-4. Tell Codex users to run `codex plugin update fractall-fit@fractall-fit` after updates.
-5. Tell Claude Code users to run `/plugin marketplace update fractall-fit`, then `/plugin install fractall-fit@fractall-fit` if needed.
-
-## MCP Configuration
-
-The Codex plugin bundles HTTP MCP with OAuth resource metadata:
-
-```json
-{
-  "mcpServers": {
-    "fractall-fit": {
-      "type": "http",
-      "url": "https://mcp.fractall.fit/mcp",
-      "oauth_resource": "https://mcp.fractall.fit"
-    }
-  }
-}
+```text
+/plugin marketplace update fractall-fit
+/plugin install fractall-fit@fractall-fit
+/reload-plugins
 ```
 
-The Claude Code plugin uses Claude's documented MCP config shape and relies on standard OAuth discovery:
+## Tools on the hosted server
 
-```json
-{
-  "mcpServers": {
-    "fractall-fit": {
-      "type": "http",
-      "url": "https://mcp.fractall.fit/mcp",
-      "oauth": {
-        "scopes": "openid email profile"
-      }
-    }
-  }
-}
-```
-
-## Maintainer MCP Notes
-
-The production MCP server must keep:
-
-- `MCP_AUTH_MODE=oauth`
-- `MCP_OAUTH_REQUIRED_SCOPES` unset
-- Supabase OAuth 2.1 + dynamic client registration enabled
-
-## Tools Exposed
-
-Tool implementations live on the hosted MCP server. This plugin only packages
-HTTP MCP + OAuth config and the coach skill. Current server surface includes:
+Live discovery can add tools without a plugin release. The coach skill in this
+repo should match the current server surface:
 
 **Orient:** `get_connection_status`, `get_teams`, `get_team_by_id`,
-`get_team_athletes`, `get_athlete_profile`, `get_recent_sessions`
+`get_team_athletes`, `get_athlete_profile`
+
+**Calendar:** `get_team_calendar`, `get_activity`, `list_activities`
 
 **Wellness:** `get_team_wellness`, `get_wellness_non_responders`,
-`get_athlete_wellness`
+`get_athlete_wellness`, `list_wellness_check_ins`
 
 **Load / RPE:** `get_team_load`, `get_team_rpe`, `get_athlete_load`,
-`get_rpe_non_responders`
+`get_rpe_non_responders`, `list_rpe_submissions`
 
-**Injuries:** `get_team_injuries`, `get_injury`, `get_pre_injury_context`
+**Injuries:** `get_team_injuries`, `get_injury`, `get_pre_injury_context`,
+`list_injury_cases`
 
-If an AI app still shows only the original four tools, live MCP discovery
-failed (usually OAuth). Re-authenticate the Fractall.fit MCP server, then
-update/reload the plugin so the skill and tool list refresh.
+**GPS:** `get_gps_activities`, `get_team_gps`, `get_athlete_gps`,
+`get_activity_gps`, `get_gps_microcycle`, `list_gps_session_metrics`,
+`get_acwr`
+
+**Physical tests:** `get_team_physical_tests`, `get_physical_tests_on_date`,
+`get_athlete_physical_tests`, `list_physical_test_measurements`
+
+**Charts / HTML reports:** `search_visualization_primitives`,
+`get_visualization_primitive`
+
+RPE session-load ACWR comes from `get_team_load` / `get_athlete_load` with
+`includeMetrics=true`. GPS volume ACWR (distance, HSR, sprint, player load,
+duration, accel/decel) comes from `get_acwr`.

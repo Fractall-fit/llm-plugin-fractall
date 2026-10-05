@@ -1,8 +1,8 @@
 {
   "name": "fractall-fit",
   "displayName": "Fractall.fit",
-  "version": "0.2.0",
-  "description": "Query Fractall teams, wellness, training load, and injuries from Claude Code.",
+  "version": "0.3.0",
+  "description": "Query Fractall teams, calendar, wellness, RPE and GPS load, injuries, tests, and HTML report charts from Claude Code.",
   "author": {
     "name": "Fractall.fit",
     "url": "https://fractall.fit"
@@ -21,7 +21,10 @@
     "wellness",
     "rpe",
     "training-load",
+    "gps",
+    "acwr",
     "injuries",
+    "physical-tests",
     "mcp"
   ],
   "skills": "./skills/",

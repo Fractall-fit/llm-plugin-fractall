@@ -1,7 +1,7 @@
 {
   "name": "fractall-fit",
-  "version": "0.2.0",
-  "description": "Query Fractall teams, wellness, training load, and injuries from Codex.",
+  "version": "0.3.0",
+  "description": "Query Fractall teams, calendar, wellness, RPE and GPS load, injuries, tests, and HTML report charts from Codex.",
   "author": {
     "name": "Fractall.fit",
     "url": "https://fractall.fit"
@@ -20,15 +20,18 @@
     "wellness",
     "rpe",
     "training-load",
+    "gps",
+    "acwr",
     "injuries",
+    "physical-tests",
     "mcp"
   ],
   "skills": "./skills/",
   "mcpServers": "./.mcp.json",
   "interface": {
     "displayName": "Fractall.fit",
-    "shortDescription": "Coach data: teams, wellness, load, injuries.",
-    "longDescription": "Connect Codex to your Fractall club. List teams and rosters, review wellness and training load (including ACWR/EWMA), and inspect injuries using your existing Fractall account.",
+    "shortDescription": "Coach data: teams, calendar, wellness, GPS, load, injuries, tests.",
+    "longDescription": "Connect Codex to your Fractall club. List teams and rosters, review calendar, wellness, RPE and GPS load (including RPE and GPS ACWR), physical tests, injuries, and HTML report charts using your existing Fractall account.",
     "developerName": "Fractall.fit",
     "category": "Productivity",
     "capabilities": ["Interactive", "Read"],
@@ -39,7 +42,9 @@
     "defaultPrompt": [
       "List the teams I can access in Fractall",
       "Who hasn't checked in wellness today?",
-      "Show squad load with ACWR highlights",
+      "Show squad RPE load with ACWR highlights",
+      "Show GPS ACWR for distance and high-speed running",
+      "Build a squad load chart I can read in this chat",
       "Who is currently injured or in RTP?"
     ],
     "composerIcon": "./assets/fractall-icon.svg",
